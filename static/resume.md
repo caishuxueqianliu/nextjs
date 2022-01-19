@@ -1,4 +1,4 @@
-export const  md  =  `刘昊
+刘昊
 ----
 
 资深前端工程师，资深前端讲师
@@ -28,5 +28,3 @@ export const  md  =  `刘昊
 
 > 如果你喜欢这个效果，
 Fork [我的项目](https://github.com/jirengu-inc/animating-resume)，打造你自己的简历！
-
-`

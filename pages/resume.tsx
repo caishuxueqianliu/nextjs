@@ -1,46 +1,15 @@
-import type { NextPage } from 'next'
-// import Head from 'next/head'
-// import Link from 'next/link'
-// import Image from 'next/image'
-// import styles from '../styles/Home.module.css'
-// import React, {useState,useEffect} from 'react'
-// // import * as echarts from 'echarts';
-//
-// const Home: NextPage = (props) => {
-//
-//     return (
-//    <>
-//            <Link href="/resume">
-//           <a>resume</a>
-//         </Link>
-//
-//      </>
-//   )
-//
-// }
-// export async function getStaticProps() {
-//     const res = await fetch('http://localhost:3000/api/hello')
-//     const posts = await res.json()
-//     return {
-//         props: {
-//             posts:posts.name
-//         },
-//     }
-// }
-//
-// export default Home
 import React, {useState, useEffect, useRef} from 'react'
 import StyleEditor from '../components/styleEditor'
 import ResumeEditor from '../components/ResumeEditor'
 import {md} from '../static/test'
 
-const Home: NextPage = (props:any) => {
-    const data = {
-        interval: 20,
-        currentStyle: '',
-        enableHtml: false,
-        fullStyle:[
-            `/*
+const Resume:React.FC = (props:any,ref) => {
+  const data = {
+    interval: 20,
+    currentStyle: '',
+    enableHtml: false,
+      fullStyle:[
+          `/*
 * Inspired by http://strml.net/测呃呃呃呃呃呃呃呃呃
 * 大家好，我是方方
 * 二月了，好多公司都在招聘，你是不是也在准备简历呀。
@@ -87,14 +56,14 @@ html{
 
 
 `,
-            `
+          `
 /* 这个简历好像差点什么
  * 对了，这是 Markdown 格式的，我需要变成对 HR 更友好的格式
  * 简单，用开源工具翻译成 HTML 就行了
  */
 `
-            ,
-            `
+          ,
+          `
 /* 再对 HTML 加点样式 */
 .resumeEditor{
   padding: 2em;
@@ -125,14 +94,14 @@ html{
   background: #ddd;
 }
 `],
-        currentMarkdown: '',
-        fullMarkdown:props.posts
-    }
-    const [currentStyle,setCurrentStyle] = useState('')
+    currentMarkdown: '',
+    fullMarkdown:md
+  }
+  const [currentStyle,setCurrentStyle] = useState('')
     const [enableHtml,setEnableHtml] = useState(false)
     const [currentMarkdown,setCurrentMarkdown] = useState('')
     const styleEditorRef = useRef("")
-    const  makeResume = async () =>{
+   const  makeResume = async () =>{
         await progressivelyShowStyle(0)
         await progressivelyShowResume()
         await progressivelyShowStyle(1)
@@ -163,11 +132,11 @@ html{
                     let char = style.substring(l, l + 1) || ' '
                     data.currentStyle += char
                     setCurrentStyle(data.currentStyle)
-                    // if (style.substring(l - 1, l) === '\n' && styleEditorRef) {
-                    //     // data.$nextTick(() => {
-                    //    console.log(styleEditorRef)
-                    //     // })
-                    // }
+                   // if (style.substring(l - 1, l) === '\n' && styleEditorRef) {
+                   //     // data.$nextTick(() => {
+                   //    console.log(styleEditorRef)
+                   //     // })
+                   // }
                     setTimeout(showStyle, interval)
                 } else {
                     resolve('')
@@ -203,33 +172,14 @@ html{
         makeResume()
     },[])
 
-    return <div >
-        <StyleEditor code={currentStyle}/>
-        {/*<pre className="" dangerouslySetInnerHTML={{ __html: Prism.highlight(data.fullStyle, Prism.languages.css)}}></pre>*/}
-        <ResumeEditor enableHtml={enableHtml} markdown={currentMarkdown}/>
-        {/*<span style={{fontSize:16}}>{currentStyle} </span> {setEnableHtml}*/}
-    </div>
+  return <div >
+      <StyleEditor code={currentStyle}/>
+      {/*<pre className="" dangerouslySetInnerHTML={{ __html: Prism.highlight(data.fullStyle, Prism.languages.css)}}></pre>*/}
+      <ResumeEditor enableHtml={enableHtml} markdown={currentMarkdown}/>
+     {/*<span style={{fontSize:16}}>{currentStyle} </span> {setEnableHtml}*/}
+  </div>
 
 }
 
 
-export async function getStaticProps() {
-    // Call an external API endpoint to get posts.
-    // You can use any data fetching library
-    // const res = await fetch('https://.../posts')
-    // const posts = await res.json()
-    // const res = await fetch('http://101.35.251.32:8081/admin/getInfo')
-    const res = await fetch('http://101.35.251.32:4000/readfile')
-    let posts = await  res.json()
-    posts = (posts.data)
-    // By returning { props: { posts } }, the Blog component
-    // will receive `posts` as a prop at build time
-    return {
-        props: {
-            posts:posts
-        },
-    }
-}
-
-
-export default Home
+export default Resume
